@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref } from 'vue';
 import Modal from "./Modal.vue";
 defineProps({
   msg: {
@@ -7,12 +7,8 @@ defineProps({
     required: false
   }
 })
-const showMessage = ref(false);
 const show = ref(false);
-const toggle = () => {
-  showMessage.value = !showMessage.value
-  console.log(showMessage.value)
-};
+
 const showModal = () => {
   show.value = !show.value;
   console.log(show.value);
@@ -23,8 +19,6 @@ const showModal = () => {
   <div class="greetings">
     <h1 class="green">{{ msg }}</h1>
 
-    <button @click="toggle">Toggle</button>
-
     <Teleport to="#modal-container">
       <button @click="showModal">Войти</button>
       <modal :show="show" @close="show = false">
@@ -33,10 +27,6 @@ const showModal = () => {
           <p>here we go</p>
         </template>
       </modal>
-    </Teleport>
-
-    <Teleport to="#purple-box">
-      <p v-if="showMessage">Hello from HelloWorld {{showMessage}}</p>
     </Teleport>
   </div>
 </template>

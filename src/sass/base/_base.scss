@@ -1,0 +1,14 @@
+@import "../abstracts/variables";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display:flex;
+  flex-direction:column;
+  position: relative;
+  background-color: $purple-gradient;
+  width: 576px;
+  margin: auto;
+}
