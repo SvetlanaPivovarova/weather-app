@@ -10,52 +10,22 @@
   position: relative;
   top: 3px;
 
-  &-16 {
+  &-19 {
     top: 0;
-    width: 16px;
-    height: 16px;
+    height: 19px;
+    width: 36px;
   }
 
-  &-18 {
+  &-44 {
     top: 0;
-    width: 18px;
-    height: 18px;
-  }
-
-  &-20{
-    top: 0;
-    width: 20px;
-    height: 20px;
-  }
-
-  &-24{
-    top: 0;
-    width: 24px;
-    height: 24px;
-  }
-
-  &-26 {
-    top: 0;
-    width: 26px;
-    height: 26px;
-  }
-
-  &-32 {
-    top: 0;
-    width: 32px;
     height: 44px;
+    width: 32px;
   }
 
-  &-48 {
+  &-100 {
     top: 0;
-    width: 48px;
-    height: 48px;
-  }
-
-  &-50 {
-    top: 0;
-    width: 50px;
-    height: 67px;
+    height: 100px;
+    width: 142px;
   }
 
   &-location {
@@ -64,6 +34,14 @@
 
   &-settings {
     background-image: url("/src/assets/icons/settings.svg");
+  }
+
+  &-weather {
+    background-image: url("/src/assets/icons/weather-icon.png");
+  }
+
+  &-wind {
+    background-image: url("src/assets/icons/wind.svg");
   }
 }
 

@@ -4,7 +4,6 @@ body {
   font-family: $body-font;
   font-size: $fz-body-sm;
   font-weight: $fw-regular;
-  line-height: $lh-body;
   color: $white;
 
   @media #{$media-laptop} {
