@@ -1,0 +1,19 @@
+@import "../abstracts/variables";
+
+.b-settings {
+
+
+  &--heading {}
+
+  &--item {
+    list-style: none;
+    background-image: $purple-gradient;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-radius: 4px;
+  }
+}

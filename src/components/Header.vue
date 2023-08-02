@@ -5,14 +5,13 @@
       <h2 class="b-header--heading">{{ location }}</h2>
     </div>
     <div>
-      <button class="b-header--button icon icon-32 icon-settings"  @click="showModal = true">
+      <button class="b-header--button icon icon-settings"  @click="showModal = true">
       </button>
     </div>
   </header>
   <Modal :show="showModal" @close="showModal = false" >
     <template #body>
-      <h1>Hi, Bublik!</h1>
-      <p>here we go</p>
+      <Settings />
     </template>
   </Modal>
 
@@ -20,6 +19,7 @@
 
 <script>
 import Modal from "./Modal.vue";
+import Settings from "./Settings.vue";
 export default {
   props: {
     location: {
@@ -33,6 +33,7 @@ export default {
     }
   },
   components: {
+    Settings,
     Modal
   },
   methods: {

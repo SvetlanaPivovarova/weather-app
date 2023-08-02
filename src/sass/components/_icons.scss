@@ -16,6 +16,12 @@
     width: 36px;
   }
 
+  &-24{
+    top: 0;
+    height: 24px;
+    width: 24px;
+  }
+
   &-44 {
     top: 0;
     height: 44px;
@@ -46,6 +52,10 @@
 
   &-close-button {
     background-image: url("src/assets/icons/icon-close-button.svg");
+  }
+
+  &-trash-delete {
+    background-image: url("src/assets/icons/trash_delete_icon.svg");
   }
 }
 
