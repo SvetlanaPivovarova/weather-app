@@ -9,14 +9,12 @@
       </button>
     </div>
   </header>
-  <Teleport to="#modal-container">
-    <Modal :show="showModal" @close="showModal = false" >
-      <template #body>
-        <h1>Hi, Bublik!</h1>
-        <p>here we go</p>
-      </template>
-    </Modal>
-  </Teleport>
+  <Modal :show="showModal" @close="showModal = false" >
+    <template #body>
+      <h1>Hi, Bublik!</h1>
+      <p>here we go</p>
+    </template>
+  </Modal>
 
 </template>
 
