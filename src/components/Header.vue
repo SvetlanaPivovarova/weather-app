@@ -5,17 +5,38 @@
       <h2 class="b-header--heading">{{ location }}</h2>
     </div>
     <div>
-      <div class="icon icon-32 icon-settings"></div>
+      <button class="b-header--button icon icon-32 icon-settings"  @click="showModal = true">
+      </button>
     </div>
   </header>
+  <Modal :show="showModal" @close="showModal = false" >
+    <template #body>
+      <h1>Hi, Bublik!</h1>
+      <p>here we go</p>
+    </template>
+  </Modal>
 </template>
 
 <script>
+import Modal from "./Modal.vue";
 export default {
   props: {
     location: {
       type: String,
       default: 'London, UK'
+    }
+  },
+  data() {
+    return {
+      showModal: false
+    }
+  },
+  components: {
+    Modal
+  },
+  methods: {
+    changeSettings() {
+      alert('click')
     }
   }
 }

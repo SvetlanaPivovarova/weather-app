@@ -27,6 +27,12 @@ const showModal = () => {
           <p>here we go</p>
         </template>
       </modal>
+      <modal :show="showModal" @close="showModal = false" >
+        <template #body>
+          <h1>Hi, Bublik!</h1>
+          <p>here we go</p>
+        </template>
+      </modal>
     </Teleport>
   </div>
 </template>

@@ -1,0 +1,39 @@
+@import "../abstracts/variables";
+
+.modal-mask {
+  color: #000000;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: $white-opacity-75;
+  display: flex;
+  transition: opacity $transition-speed ease;
+  backdrop-filter: blur(7.5px);
+
+  .modal-container {
+    width: 500px;
+    margin: 50px auto 0;
+    padding: 15px 30px 30px;
+    background-color: #fff;
+    border-radius: $br-large;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.30);
+    transition: all $transition-speed ease;
+    position: relative;
+  }
+
+  .modal-enter-from {
+    opacity: 0;
+  }
+
+  .modal-leave-to {
+    opacity: 0;
+  }
+
+  .modal-enter-from .modal-container,
+  .modal-leave-to .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
