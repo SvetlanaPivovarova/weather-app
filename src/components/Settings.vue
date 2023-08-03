@@ -3,6 +3,7 @@
     <h2 class="b-settings--title">Settings</h2>
     <ul>
       <LocationItem />
+      <LocationItem location-display="Moscow" />
     </ul>
   </section>
 </template>
