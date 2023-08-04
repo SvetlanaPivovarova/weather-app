@@ -75,11 +75,8 @@ export default {
       this.error = "Unable to get your location. Select below";
       this.isLoading = false;
       this.showModal = true;
-
-      alert(this.error)
     },
     geoFindMe() {
-
       if (!navigator.geolocation) {
         this.error = "Geolocation не поддерживается вашим браузером";
 

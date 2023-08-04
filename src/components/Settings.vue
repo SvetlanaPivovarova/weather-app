@@ -2,57 +2,73 @@
   <section class="b-settings">
     <h2 class="b-settings--title">Settings</h2>
     <ul v-for="item in locations" :key="item">
-      <LocationItem :locationDisplay="item" />
+      <LocationItem :locationDisplay="item" @delete="deletedItem = $event" />
     </ul>
-    <AddLocation @addLocation="locations = [...$event]" />
+    <AddLocationForm @add="newItem = $event" />
   </section>
-  <button id="find-me" @click="geoFindMe">Show my location</button><br />
-  <p id="status"></p>
-  <a id="map-link" target="_blank"></a>
-
 </template>
 
 <script>
 import LocationItem from "./LocationItem.vue";
-import AddLocation from "./AddLocationForm.vue";
+import AddLocationForm from "./AddLocationForm.vue";
+
+// localStorage persistence
+const STORAGE_KEY = "weather-locations";
+const locationStorage = {
+  fetch() {
+    const locations = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    locations.forEach((location, index) => {
+      location.id = index;
+    });
+    locationStorage.uid = locations.length;
+    return locations;
+  },
+  save(locations) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(locations));
+  }
+};
 
 export default {
   name: 'SettingsComponent',
-  components: { LocationItem, AddLocation },
+  components: { AddLocationForm, LocationItem },
   data() {
     return {
-      locations: []
+      locations: locationStorage.fetch(),
+      newItem: null,
+      deletedItem: ''
+    }
+  },
+  watch: {
+    'locations'() {
+      locationStorage.save(this.locations)
+    },
+    'newItem'() {
+      this.addLocation(this.newItem)
+
+    },
+    'deletedItem'() {
+      this.removeLocation(this.deletedItem)
     }
   },
   methods: {
-    geoFindMe() {
-  const status = document.querySelector("#status");
-  const mapLink = document.querySelector("#map-link");
-
-  mapLink.href = "";
-  mapLink.textContent = "";
-
-  function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    status.textContent = "";
-    mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-    mapLink.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
+    addLocation() {
+      const value = this.newItem && this.newItem.trim();
+      if (!value) {
+        return;
+      }
+      this.locations.push({
+        id: locationStorage.uid++,
+        name: value,
+      });
+      locationStorage.save(this.locations);
+      this.newItem = "";
+    },
+    removeLocation(id) {
+      this.locations = this.locations.filter(
+          (item) => item.id !== id
+      );
+      locationStorage.save(this.locations);
+    },
   }
-
-  function error() {
-    status.textContent = "Невозможно получить ваше местоположение";
-  }
-
-  if (!navigator.geolocation) {
-    status.textContent = "Geolocation не поддерживается вашим браузером";
-  } else {
-    status.textContent = "Определение местоположения…";
-    navigator.geolocation.getCurrentPosition(success, error);
-  }
-}
-
-}
 }
 </script>

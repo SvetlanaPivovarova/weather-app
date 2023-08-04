@@ -2,9 +2,9 @@
   <li class="b-settings--item">
     <div class="b-settings--line">
       <div class="b-settings--accent"><span></span></div>
-      <p class="b-settings--item-text">{{ locationDisplay }}</p>
+      <p class="b-settings--item-text">{{ locationDisplay.name }}</p>
     </div>
-    <div class="icon icon-24 icon-trash-delete"></div>
+    <div class="icon icon-24 icon-trash-delete" @click="deleteLocation"></div>
   </li>
 </template>
 
@@ -13,8 +13,13 @@ export default {
   name: 'LocationItem',
   props: {
     locationDisplay: {
-      type: String,
-      default: 'London, UK'
+      type: Object,
+    },
+  },
+  methods: {
+    deleteLocation() {
+
+      this.$emit('delete', this.locationDisplay.id)
     }
   }
 }

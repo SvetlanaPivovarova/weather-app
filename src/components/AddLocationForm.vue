@@ -21,20 +21,19 @@
 
 <script>
 export default {
-  name: 'AddLocation',
+  name: 'AddLocationForm',
+  emits: ['add'],
   data() {
     return {
       newLocation: null,
-      locations: ['lon'],
+      locations: [],
       isValid: false,
     }
   },
   methods: {
     addLocation() {
-      this.locations.push(...this.newLocation)
-      console.log(this.locations)
-      this.$emit('addLocation', this.newLocation)
+      this.$emit('add', this.newLocation)
     }
-  }
+  },
 }
 </script>
