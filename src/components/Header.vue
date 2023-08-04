@@ -21,16 +21,16 @@
 import Modal from "./Modal.vue";
 import Settings from "./Settings.vue";
 export default {
+  name: 'HeaderComponent',
   props: {
     location: {
       type: String,
-      default: 'London, UK'
-    }
+      default: 'Moscow'
+    },
   },
   data() {
     return {
       showModal: false,
-      loc: null
     }
   },
   components: {
@@ -38,14 +38,7 @@ export default {
     Modal
   },
   mounted() {
-    //this.loc = window.getCurrentPosition();
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        alert(position.coords.latitude, position.coords.longitude);
-      });
-    } else {
-      console.log('no')
-    }
+
 
   },
   methods: {

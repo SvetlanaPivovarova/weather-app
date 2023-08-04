@@ -10,7 +10,7 @@ const locationName = ref('');
 <template>
   <div class="background">
     <Header :location="locationName" />
-    <WeatherItem @send-name="locationName = $event"/>
+    <WeatherItem @send-name="locationName = $event" />
   </div>
 </template>
 

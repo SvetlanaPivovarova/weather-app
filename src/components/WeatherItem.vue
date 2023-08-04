@@ -18,16 +18,24 @@
   <div v-if="isLoading" class="b-info--loader-container">
     <Loader />
   </div>
+  <Modal :show="showModal" @close="showModal = false" >
+    <template #body>
+      <p class="b-info--tooltip">{{ this.error }}</p>
+      <Settings />
+    </template>
+  </Modal>
 </template>
 
 <script>
 import Info from "./Info.vue";
+import Modal from "@/components/Modal.vue";
 import { API_KEY } from "../utils/constants";
 import Loader from "./Loader.vue";
+import Settings from "@/components/Settings.vue";
 
 export default {
   name: 'WeatherItem',
-  components: { Loader, Info },
+  components: {Settings, Loader, Info, Modal },
   data() {
     return {
       latitude: null,
@@ -42,10 +50,11 @@ export default {
       pressure: null,
       visibility: null,
       feels: null,
-      description: ''
+      description: '',
+      showModal: false
     }
   },
-  emits: ['sendName'],
+  emits: ['sendName', 'sendShow'],
   mounted() {
     this.isLoading = true;
     this.geoFindMe()
@@ -55,7 +64,6 @@ export default {
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${API_KEY}&units=metric`)
           .then((response) => response.json())
           .then((result) => {
-
             this.results = result;
           })
           .catch((error) => {
@@ -64,12 +72,17 @@ export default {
           .finally(() => this.isLoading = false);
     },
     handleError() {
-      this.error = "Невозможно получить ваше местоположение";
+      this.error = "Unable to get your location. Select below";
+      this.isLoading = false;
+      this.showModal = true;
+
+      alert(this.error)
     },
     geoFindMe() {
 
       if (!navigator.geolocation) {
         this.error = "Geolocation не поддерживается вашим браузером";
+
       } else {
         this.message = "Определение местоположения…";
         navigator.geolocation.getCurrentPosition(this.handleSuccess, this.handleError);
