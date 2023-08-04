@@ -12,21 +12,7 @@
 import LocationItem from "./LocationItem.vue";
 import AddLocationForm from "./AddLocationForm.vue";
 
-// localStorage persistence
-const STORAGE_KEY = "weather-locations";
-const locationStorage = {
-  fetch() {
-    const locations = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    locations.forEach((location, index) => {
-      location.id = index;
-    });
-    locationStorage.uid = locations.length;
-    return locations;
-  },
-  save(locations) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(locations));
-  }
-};
+import { locationStorage } from "@/utils/utils";
 
 export default {
   name: 'SettingsComponent',

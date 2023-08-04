@@ -1,27 +1,15 @@
-export function geoFindMe() {
-    const status = document.querySelector("#status");
-    const mapLink = document.querySelector("#map-link");
+import { STORAGE_KEY } from "@/utils/constants";
 
-    mapLink.href = "";
-    mapLink.textContent = "";
-
-    function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-
-        status.textContent = "";
-        mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
-        mapLink.textContent = `Широта: ${latitude} °, Долгота: ${longitude} °`;
+export const locationStorage = {
+    fetch() {
+        const locations = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        locations.forEach((location, index) => {
+            location.id = index;
+        });
+        locationStorage.uid = locations.length;
+        return locations;
+    },
+    save(locations) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(locations));
     }
-
-    function error() {
-        status.textContent = "Невозможно получить ваше местоположение";
-    }
-
-    if (!navigator.geolocation) {
-        status.textContent = "Geolocation не поддерживается вашим браузером";
-    } else {
-        status.textContent = "Определение местоположения…";
-        navigator.geolocation.getCurrentPosition(success, error);
-    }
-}
+};
