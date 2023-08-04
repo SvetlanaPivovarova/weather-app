@@ -33,6 +33,8 @@ import { API_KEY } from "../utils/constants";
 import Loader from "./Loader.vue";
 import Settings from "@/components/Settings.vue";
 
+import { locationStorage } from "@/utils/utils";
+
 export default {
   name: 'WeatherItem',
   components: {Settings, Loader, Info, Modal },
@@ -51,7 +53,8 @@ export default {
       visibility: null,
       feels: null,
       description: '',
-      showModal: false
+      showModal: false,
+      locations: locationStorage.fetch(),
     }
   },
   emits: ['sendName', 'sendShow'],
@@ -65,6 +68,11 @@ export default {
           .then((response) => response.json())
           .then((result) => {
             this.results = result;
+            this.locations.push({
+              id: locationStorage.uid++,
+              name: result.name,
+            });
+            locationStorage.save(this.locations);
           })
           .catch((error) => {
             console.log(error);
