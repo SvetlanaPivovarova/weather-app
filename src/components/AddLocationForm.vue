@@ -16,10 +16,7 @@
       >
       </button>
     </div>
-
   </div>
-
-
 </template>
 
 <script>
@@ -28,15 +25,13 @@ export default {
   data() {
     return {
       newLocation: null,
-      locations: {
-        type: Array
-      },
+      locations: ['lon'],
       isValid: false,
     }
   },
   methods: {
     addLocation() {
-      this.locations = this.locations.push(...this.newLocation)
+      this.locations.push(...this.newLocation)
       console.log(this.locations)
       this.$emit('addLocation', this.newLocation)
     }

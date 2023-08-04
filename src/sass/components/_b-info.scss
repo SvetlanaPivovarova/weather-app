@@ -14,7 +14,7 @@
 
   &--wrapper {
     position: relative;
-    min-width: 200px;
+    min-width: 250px;
     height: 156px;
   }
 
@@ -54,5 +54,11 @@
       font-weight: 500;
     }
 
+  }
+
+  &--loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

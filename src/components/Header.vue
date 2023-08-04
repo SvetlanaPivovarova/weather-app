@@ -29,12 +29,24 @@ export default {
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      loc: null
     }
   },
   components: {
     Settings,
     Modal
+  },
+  mounted() {
+    //this.loc = window.getCurrentPosition();
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        alert(position.coords.latitude, position.coords.longitude);
+      });
+    } else {
+      console.log('no')
+    }
+
   },
   methods: {
     changeSettings() {
