@@ -11,6 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://svetlanapivovarova.github.io/weather-app",
   "dependencies": {
     "pinia": "^2.1.4",
     "vue": "^3.3.4"
