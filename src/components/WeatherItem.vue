@@ -21,7 +21,7 @@
   <Modal :show="showModal" @close="showModal = false" >
     <template #body>
       <p class="b-info--tooltip">{{ error }}</p>
-      <Settings />
+      <Settings @refresh="refresh = true" />
     </template>
   </Modal>
 </template>
@@ -51,6 +51,15 @@ export default {
       isLoading: null,
       showModal: false,
       locations: locationStorage.fetch(),
+      refresh: false,
+    }
+  },
+  watch: {
+    'refresh'() {
+      if (this.refresh) {
+        console.log(this.refresh)
+        location.reload()
+      }
     }
   },
   computed: {

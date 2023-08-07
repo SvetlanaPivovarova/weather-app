@@ -21,19 +21,23 @@ export default {
     return {
       locations: locationStorage.fetch(),
       newItem: null,
-      deletedItem: ''
+      deletedItem: '',
     }
   },
+  emits: ['refresh'],
   watch: {
     'locations'() {
       locationStorage.save(this.locations)
     },
     'newItem'() {
       this.addLocation(this.newItem)
-
+      console.log('added')
+      this.$emit('refresh')
     },
     'deletedItem'() {
       this.removeLocation(this.deletedItem)
+      console.log('deleted')
+      this.$emit('refresh')
     }
   },
   methods: {
