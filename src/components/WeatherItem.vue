@@ -3,17 +3,17 @@
     <div class="b-info--section">
       <div class="icon icon-100 icon-weather"></div>
       <div class="b-info--wrapper">
-        <p class="b-info--number">{{ weatherData.temp }} <span>&#8451;</span></p>
+        <p class="b-info--number">{{ getTemperature }} <span>&#8451;</span></p>
       </div>
     </div>
-    <div class="b-info--text">Feels like {{ weatherData.feels }} ℃, {{ weatherData.description }}</div>
+    <div class="b-info--text">Feels like {{ getFeelsLike }} ℃, {{ weatherData.description }}</div>
   </div>
   <Info
       v-if="!isLoading"
-      :wind="weatherData.wind"
-      :humidity="weatherData.humidity"
-      :pressure="weatherData.pressure"
-      :visibility="weatherData.visibility"
+      :wind="getWind"
+      :humidity="getHumidity"
+      :pressure="getPressure"
+      :visibility="getVisibility"
   />
   <div v-if="isLoading" class="b-info--loader-container">
     <Loader />
@@ -38,6 +38,11 @@ import { locationStorage } from "@/utils/utils";
 export default {
   name: 'WeatherItem',
   components: {Settings, Loader, Info, Modal },
+  props: {
+    weather: {
+      type: Object,
+    }
+  },
   data() {
     return {
       latitude: null,
@@ -68,8 +73,32 @@ export default {
       allTheWeather: []
     }
   },
+  computed: {
+    getTemperature() {
+      return Math.round(this.weather.main.temp)
+    },
+    getWind() {
+      return Number(this.weather.wind.speed)
+    },
+    getHumidity() {
+      return Number(this.weather.main.humidity)
+    },
+    getPressure() {
+      return Number(this.weather.main.pressure)
+    },
+    getVisibility() {
+      return Number(this.weather.visibility)
+    },
+    getFeelsLike() {
+      return Math.round(this.weather.main.feels_like)
+    },
+    getDescription() {
+      return this.weather.weather[0].description
+    }
+  },
   emits: ['sendName', 'sendShow'],
   mounted() {
+    console.log(this.weather)
     this.isLoading = true;
     if(!locationStorage.fetch()) {
       this.geoFindMe()
@@ -85,7 +114,6 @@ export default {
               //  name: result.name,
               //});
               //locationStorage.save(this.locations);
-              console.log('done', i, result)
               localStorage.setItem(`${this.locations[i].name}`, JSON.stringify(result));
 
             })
@@ -141,7 +169,6 @@ export default {
       this.weatherData.description = this.results.weather[0].description;
       this.weatherData.name = this.results.name;
       localStorage.setItem(`${this.results.name}`, JSON.stringify(this.weatherData));
-      this.$emit('sendName', this.results.name)
     }
   }
 }

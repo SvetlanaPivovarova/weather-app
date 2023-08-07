@@ -1,7 +1,7 @@
 <template>
   <div class="background">
     <HeaderComponent :location="locationName" />
-    <WeatherItem @send-name="locationName = $event" />
+    <WeatherItem :weather="getWeatherData" />
   </div>
 </template>
 
@@ -10,10 +10,16 @@ import HeaderComponent from './Header.vue';
 import WeatherItem from "@/components/WeatherItem.vue";
 export default {
   name: 'BlockComponent',
+  props: {
+    locationName : {
+      type: String,
+
+    }
+  },
   components: {HeaderComponent, WeatherItem},
-  data() {
-    return {
-      locationName: ''
+  computed: {
+    getWeatherData() {
+      return JSON.parse(localStorage.getItem(`${this.locationName}`))
     }
   }
 }
