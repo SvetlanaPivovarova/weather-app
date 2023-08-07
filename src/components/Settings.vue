@@ -31,12 +31,10 @@ export default {
     },
     'newItem'() {
       this.addLocation(this.newItem)
-      console.log('added')
       this.$emit('refresh')
     },
     'deletedItem'() {
       this.removeLocation(this.deletedItem)
-      console.log('deleted')
       this.$emit('refresh')
     }
   },
@@ -58,6 +56,7 @@ export default {
           (item) => item.id !== id
       );
       locationStorage.save(this.locations);
+      this.newItem = null;
     },
   }
 }

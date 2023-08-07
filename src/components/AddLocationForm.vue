@@ -43,7 +43,8 @@ export default {
               this.errorMessage = result.message
             }
             else {
-              this.$emit('add', this.newLocation)
+              this.$emit('add', this.newLocation);
+              this.newLocation = null;
             }
           })
           .catch((error) => {

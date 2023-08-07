@@ -16,9 +16,9 @@ export default {
       type: Object,
     },
   },
+  emits: ['delete'],
   methods: {
     deleteLocation() {
-
       this.$emit('delete', this.locationDisplay.id)
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <main v-if="!isLoading">
+  <main v-if="!isLoading" :key="componentKey">
     <div v-for="item in arrayOfLocations" :key="item.id">
       <Block :location-name="item.name"/>
     </div>
@@ -42,14 +42,13 @@ export default {
       locations: null,
       showModal: false,
       refresh: false,
+      componentKey: 0
     }
   },
   mounted() {
     this.isLoading = true;
     this.locations = locationStorage.fetch()
-    console.log('1')
     if(this.locations.length === 0) {
-      console.log('2')
       this.geoFindMe()
     }
     else {
@@ -101,13 +100,18 @@ export default {
         navigator.geolocation.getCurrentPosition(this.handleSuccess, this.handleError, options);
       }
     },
+    refreshComponent() {
+      this.componentKey += 1;
+    }
   },
   watch: {
     'refresh'() {
       if (this.refresh) {
-        location.reload()
+        console.log(this.refresh)
+        this.refreshComponent()
+        this.refresh = false;
       }
-    }
+    },
   },
 }
 </script>
