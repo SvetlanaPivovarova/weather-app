@@ -6,7 +6,7 @@
         <p class="b-info--number">{{ getTemperature }} <span>&#8451;</span></p>
       </div>
     </div>
-    <div class="b-info--text">Feels like {{ getFeelsLike }} ℃, {{ weatherData.description }}</div>
+    <div class="b-info--text">Feels like {{ getFeelsLike }} ℃, {{ getDescription }}</div>
   </div>
   <Info
       v-if="!isLoading"
@@ -20,7 +20,7 @@
   </div>
   <Modal :show="showModal" @close="showModal = false" >
     <template #body>
-      <p class="b-info--tooltip">{{ this.error }}</p>
+      <p class="b-info--tooltip">{{ error }}</p>
       <Settings />
     </template>
   </Modal>
@@ -48,29 +48,9 @@ export default {
       latitude: null,
       longitude: null,
       error: '',
-      message: '',
-      results: null,
       isLoading: null,
-      temp: null,
-      wind: null,
-      humidity: null,
-      pressure: null,
-      visibility: null,
-      feels: null,
-      description: '',
       showModal: false,
       locations: locationStorage.fetch(),
-      weatherData: {
-        name: null,
-        temp: null,
-        wind: null,
-        humidity: null,
-        pressure: null,
-        visibility: null,
-        feels: null,
-        description: '',
-      },
-      allTheWeather: []
     }
   },
   computed: {
@@ -96,9 +76,7 @@ export default {
       return this.weather.weather[0].description
     }
   },
-  emits: ['sendName', 'sendShow'],
   mounted() {
-    console.log(this.weather)
     this.isLoading = true;
     if(!locationStorage.fetch()) {
       this.geoFindMe()
@@ -108,30 +86,20 @@ export default {
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.locations[i].name}&appid=${API_KEY}&units=metric`)
             .then((response) => response.json())
             .then((result) => {
-              //this.results = result;
-              //this.locations.push({
-              //  id: locationStorage.uid++,
-              //  name: result.name,
-              //});
-              //locationStorage.save(this.locations);
               localStorage.setItem(`${this.locations[i].name}`, JSON.stringify(result));
-
             })
             .catch((error) => {
               console.log(error);
             })
             .finally(() => this.isLoading = false);
       }
-
     }
-
   },
   methods: {
     handleSuccess(position) {
       fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${API_KEY}&units=metric`)
           .then((response) => response.json())
           .then((result) => {
-            this.results = result;
             this.locations.push({
               id: locationStorage.uid++,
               name: result.name,
@@ -151,25 +119,10 @@ export default {
     geoFindMe() {
       if (!navigator.geolocation) {
         this.error = "Geolocation не поддерживается вашим браузером";
-
       } else {
-        this.message = "Определение местоположения…";
         navigator.geolocation.getCurrentPosition(this.handleSuccess, this.handleError);
       }
     },
   },
-  watch: {
-    'results'() {
-      this.weatherData.temp = Math.round(this.results.main.temp);
-      this.weatherData.wind = Number(this.results.wind.speed);
-      this.weatherData.humidity = Number(this.results.main.humidity);
-      this.weatherData.pressure = Number(this.results.main.pressure);
-      this.weatherData.visibility = Number(this.results.visibility) / 1000;
-      this.weatherData.feels = Math.round(this.results.main.feels_like);
-      this.weatherData.description = this.results.weather[0].description;
-      this.weatherData.name = this.results.name;
-      localStorage.setItem(`${this.results.name}`, JSON.stringify(this.weatherData));
-    }
-  }
 }
 </script>
