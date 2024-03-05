@@ -1,5 +1,5 @@
 <template>
-  <main v-if="!isLoading" :key="componentKey">
+  <main v-if="!isLoading">
     <div v-for="item in arrayOfLocations" :key="item.id">
       <Block :location-name="item.name"/>
     </div>
@@ -42,7 +42,6 @@ export default {
       locations: null,
       showModal: false,
       refresh: false,
-      componentKey: 0
     }
   },
   mounted() {
@@ -100,15 +99,11 @@ export default {
         navigator.geolocation.getCurrentPosition(this.handleSuccess, this.handleError, options);
       }
     },
-    refreshComponent() {
-      this.componentKey += 1;
-    }
   },
   watch: {
     'refresh'() {
       if (this.refresh) {
-        console.log(this.refresh)
-        this.refreshComponent()
+        location.reload();
         this.refresh = false;
       }
     },
